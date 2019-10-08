@@ -16,23 +16,20 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text(_title)
         ),
-        body: SearchInputWidget()
-        // body: Center(
-        //   child: Image.network('https://picsum.photos/250?image=9'),
-        // )
+        body: HomeScreenWidget()
       ),
     );
   }
 }
 
-class SearchInputWidget extends StatefulWidget {
-  SearchInputWidget({ Key key }) : super(key: key);
+class HomeScreenWidget extends StatefulWidget {
+  HomeScreenWidget({ Key key }) : super(key: key);
 
   @override
-  _SearchInputWidgetState createState() => _SearchInputWidgetState();
+  _HomeScreenWidgetState createState() => _HomeScreenWidgetState();
 }
 
-class _SearchInputWidgetState extends State<SearchInputWidget> {
+class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   final _formKey = GlobalKey<FormState>();
   final _valueController = TextEditingController();
 
