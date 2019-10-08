@@ -1,6 +1,8 @@
 # unsplashed
 
-A new Flutter project.
+> This project is for studies puposes only.
+
+Based on a text input, search images on [unsplashed.com](https://unsplashed.com) and list them.
 
 ## Getting Started
 
