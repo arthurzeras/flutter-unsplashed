@@ -12,9 +12,11 @@ class HomeScreenWidget extends StatefulWidget {
 }
 
 class _HomeScreenWidgetState extends State<HomeScreenWidget> {
+  Future<List> images;
   final _formKey = GlobalKey<FormState>();
   final _valueController = TextEditingController();
-  Future<List> images;
+
+  bool _loading = false;
 
   @override
   void dispose() {
@@ -23,8 +25,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   }
 
   Future<List<UnsplashImage>> _getImages(String query) async {
+    setState(() { _loading = true; });
+
     final response = 
       await http.get("https://unsplash.com/napi/search?query=$query&per_page=20");
+
+    setState(() { _loading = false; });
 
     if (response.statusCode == 200) {
       var decoded = json.decode(response.body);
@@ -73,7 +79,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         setState(() { images = _getImages(_valueController.text); });
-                        // setState(() { post = fetchPost(_valueController.text); });
                       }
                     },
                   ),
@@ -86,7 +91,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           child: FutureBuilder(
             future: images,
             builder: (context, snapshot) {
-              if (snapshot.hasError) {
+              if (_loading) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               } else if (snapshot.hasData) {
                 return ListView.builder(
@@ -100,7 +107,24 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                 );
               }
 
-              return Center(child: CircularProgressIndicator());
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.network(
+                    'https://bit.ly/30XTjBZ'
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Text(
+                      'Type a term like cars, universe, dogs and others above',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  )
+                ],
+              );
             },
           ),
         )
