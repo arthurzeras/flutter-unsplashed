@@ -93,9 +93,13 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
             builder: (context, snapshot) {
               if (_loading) {
                 return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
+              }
+              
+              if (snapshot.hasError) {
                 return Text("${snapshot.error}");
-              } else if (snapshot.hasData) {
+              }
+              
+              if (snapshot.hasData) {
                 return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
